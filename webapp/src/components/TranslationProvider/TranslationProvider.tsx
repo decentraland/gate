@@ -1,5 +1,6 @@
 import * as React from 'react'
 
+import { Loader } from 'decentraland-ui'
 import TranslationSetup from './TranslationSetup'
 import { I18nProvider, addAvailableLocaleData } from 'modules/translation/utils'
 import { TranslationProviderProps } from 'components/TranslationProvider/types'
@@ -8,7 +9,10 @@ export default class TranslationProvider extends React.PureComponent<
   TranslationProviderProps
 > {
   componentWillMount() {
+    const { locale, onFetchTranslations } = this.props
+
     addAvailableLocaleData()
+    onFetchTranslations(locale)
   }
 
   componentWillReceiveProps(nextProps: TranslationProviderProps) {
@@ -20,7 +24,7 @@ export default class TranslationProvider extends React.PureComponent<
   }
 
   renderLoading() {
-    return <div>Loading...</div>
+    return <Loader active size="massive" />
   }
 
   render() {

@@ -6,8 +6,8 @@ import { locations } from 'locations'
 import Wallet from 'components/Wallet'
 import Page from 'components/Page'
 import HomePage from 'components/HomePage'
-import DomainDetailPage from 'components/DomainDetailPage'
-import DomainsPage from 'components/DomainsPage'
+import PollDetailPage from 'components/PollDetailPage'
+import VotePage from 'components/VotePage'
 
 export default class Routes extends React.Component {
   renderRoutes() {
@@ -16,14 +16,10 @@ export default class Routes extends React.Component {
         <Route exact={true} path={locations.root()} component={HomePage} />
         <Route
           exact={true}
-          path={locations.domains()}
-          component={DomainsPage}
+          path={locations.poll()}
+          component={PollDetailPage}
         />
-        <Route
-          exact={true}
-          path={locations.domain()}
-          component={DomainDetailPage}
-        />
+        <Route exact={true} path={locations.vote()} component={VotePage} />
         <Redirect to={locations.root()} />
       </Switch>
     )

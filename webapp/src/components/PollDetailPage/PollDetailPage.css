@@ -1,0 +1,28 @@
+.PollDetailPage .ui.header.sub.description {
+  margin-bottom: 40px;
+}
+
+.PollDetailPage .vote {
+  margin-top: 40px;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+}
+
+.PollDetailPage .progress {
+  margin-top: 1.5em;
+}
+
+.PollDetailPage .vote .your-vote {
+  display: inline-block;
+  margin-left: 1em;
+}
+
+.PollDetailPage .vote .your-vote .time-ago {
+  color: var(--secondary-text);
+}
+
+.PollDetailPage .votes {
+  margin-top: 6.8em;
+  margin-bottom: 9em;
+}

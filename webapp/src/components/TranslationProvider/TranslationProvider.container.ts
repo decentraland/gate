@@ -1,7 +1,6 @@
-import { Dispatch } from 'redux'
 import { connect } from 'react-redux'
-import { RootState } from 'types'
-import { getLocale, isConnecting } from 'modules/wallet/selectors'
+import { RootState, RootDispatch } from 'types'
+import { getLocale } from 'modules/wallet/selectors'
 import { getData } from 'modules/translation/selectors'
 import { fetchTranslationsRequest } from 'modules/translation/actions'
 import { getPreferredLocale } from 'modules/translation/utils'
@@ -14,12 +13,7 @@ const mapState = (
   state: RootState,
   ownProps: TranslationProviderProps
 ): TranslationProviderProps => {
-  let locale = getLocale(state) || ''
-
-  if (!isConnecting(state)) {
-    locale = locale || getPreferredLocale()
-  }
-
+  const locale = getLocale(state) || getPreferredLocale()
   const translations = getData(state)[locale]
 
   return {
@@ -29,7 +23,7 @@ const mapState = (
   }
 }
 
-const mapDispatch = (dispatch: Dispatch<TranslationActions>) => ({
+const mapDispatch = (dispatch: RootDispatch<TranslationActions>) => ({
   onFetchTranslations: (locale: string) =>
     dispatch(fetchTranslationsRequest(locale))
 })

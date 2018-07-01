@@ -2,15 +2,22 @@ import { combineReducers } from 'redux'
 import { routerReducer as router } from 'react-router-redux'
 
 import { RootState } from 'types'
-import { domainReducer as domain } from 'modules/domain/reducer'
-import { transactionReducer as transaction } from 'modules/transaction/reducer'
+import { accountBalanceReducer as accountBalance } from 'modules/accountBalance/reducer'
+import { optionReducer as option } from 'modules/option/reducer'
+import { pollReducer as poll } from 'modules/poll/reducer'
+import { tokenReducer as token } from 'modules/token/reducer'
 import { translationReducer as translation } from 'modules/translation/reducer'
+import { voteReducer as vote } from 'modules/vote/reducer'
 import { walletReducer as wallet } from 'modules/wallet/reducer'
 
+// TODO: Consider spliting individual reducers into { data, loading, error }
 export const rootReducer = combineReducers<RootState>({
-  domain,
-  transaction,
+  accountBalance,
+  option,
+  poll,
+  token,
   translation,
   router,
+  vote,
   wallet
 })

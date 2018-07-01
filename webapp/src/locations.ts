@@ -1,12 +1,12 @@
-export interface Locations {
-  [key: string]: (...args: any[]) => string
-}
-
-export const locations: Locations = {
+export const locations = {
   root: () => '/',
+  polls: () => '/',
 
-  domains: () => '/domains',
+  poll: () => '/polls/:id',
+  pollDetail: (id: string) => `/polls/${id}`,
 
-  domain: () => '/domains/:id',
-  domainDetail: id => `/domains/${id}`
+  vote: () => '/polls/:id/vote',
+  voteDetail: (id: string) => `/polls/${id}/vote`
 }
+
+export const STATIC_PAGES: string[] = []
