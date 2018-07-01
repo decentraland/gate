@@ -1,0 +1,29 @@
+{
+  "name": "invite",
+  "version": "1.0.0",
+  "description": "Invitations for the Decentraland beta program",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/decentraland/invite.git"
+  },
+  "keywords": [
+    "decentraland",
+    "beta",
+    "erc721"
+  ],
+  "author": "The Decentraland Team <hello@decentraland.org>",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/decentraland/invite/issues"
+  },
+  "homepage": "https://github.com/decentraland/invite#readme",
+  "dependencies": {
+    "decentraland-ui": "^1.5.4",
+    "eth-connect": "^0.3.0",
+    "openzeppelin-solidity": "^1.10.0"
+  }
+}
