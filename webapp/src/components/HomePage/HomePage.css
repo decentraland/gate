@@ -1,2 +1,36 @@
 .HomePage {
 }
+
+.HomePage .ui.segment {
+  background: var(--secondary);
+  margin: 36px 0px;
+  padding: 24px;
+}
+
+.HomePage .header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.HomePage .header .ui.header {
+  margin: 0px;
+}
+
+.HomePage .header .ui.button {
+  cursor: default;
+}
+
+.HomePage .dcl.field .ui.input input {
+  border-color: var(--secondary-text);
+}
+
+.HomePage .dcl.field.error .ui.input input {
+  border-color: var(--danger);
+}
+
+.HomePage .ui.button.primary {
+  min-width: 198px;
+  margin-top: 24px;
+}

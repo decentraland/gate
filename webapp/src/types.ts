@@ -1,10 +1,12 @@
 import { MiddlewareAPI, AnyAction, Store } from 'redux'
 import { RouterState } from 'react-router-redux'
 import { WalletState } from '@dapps/modules/wallet/types'
+import { PendingState } from 'modules/pending/types'
 
 export type RootState = {
   router: RouterState
   wallet: WalletState
+  pending: PendingState
 }
 
 export type RootStore = Store<RootState>
