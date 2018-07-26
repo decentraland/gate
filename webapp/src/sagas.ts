@@ -1,25 +1,30 @@
 import { all } from 'redux-saga/effects'
+import { env } from 'decentraland-commons'
+import { eth } from 'decentraland-eth'
+import { analyticsSaga } from '@dapps/modules/analytics/sagas'
+import { locationSaga } from '@dapps/modules/location/sagas'
+import { createWalletSaga } from '@dapps/modules/wallet/sagas'
+import { createTranslationSaga } from '@dapps/modules/translation/sagas'
+import { transactionSaga } from '@dapps/modules/transaction/sagas'
+import { manaToken } from 'contracts'
+import * as translations from 'translations'
 
-import { accountBalanceSaga } from 'modules/accountBalance/sagas'
-import { analyticsSaga } from 'modules/analytics/sagas'
-import { locationSaga } from 'modules/location/sagas'
-import { optionSaga } from 'modules/option/sagas'
-import { pollSaga } from 'modules/poll/sagas'
-import { voteSaga } from 'modules/vote/sagas'
-import { tokenSaga } from 'modules/token/sagas'
-import { translationSaga } from 'modules/translation/sagas'
-import { walletSaga } from 'modules/wallet/sagas'
+const walletSaga = createWalletSaga({
+  provider: env.get('REACT_APP_PROVIDER_URL'),
+  contracts: [manaToken],
+  eth
+})
+
+export const translationSaga = createTranslationSaga({
+  translations
+})
 
 export function* rootSaga() {
   yield all([
-    accountBalanceSaga(),
     analyticsSaga(),
     locationSaga(),
-    optionSaga(),
-    pollSaga(),
-    voteSaga(),
-    tokenSaga(),
+    walletSaga(),
     translationSaga(),
-    walletSaga()
+    transactionSaga()
   ])
 }

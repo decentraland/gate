@@ -20,6 +20,7 @@
     "noUnusedLocals": true,
     "plugins": [{ "name": "tslint-language-service" }],
     "paths": {
+      "@dapps/*": ["./node_modules/decentraland-dapps/dist/*"],
       "components/*": ["./src/components/*"],
       "lib/*": ["./src/lib/*"],
       "modules/*": ["./src/modules/*"],
@@ -27,7 +28,9 @@
       "reducer": ["./src/reducer"],
       "types": ["./src/types"],
       "store": ["./src/store"],
-      "locations": ["./src/locations"]
+      "locations": ["./src/locations"],
+      "contracts": ["./src/contracts"],
+      "translations": ["./src/translations"]
     }
   },
   "exclude": [
