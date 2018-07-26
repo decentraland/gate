@@ -4,7 +4,8 @@
   "description": "Invitations for the Decentraland beta program",
   "main": "index.js",
   "scripts": {
-    "test": "mocha test"
+    "test-contracts": "scripts/test.sh",
+    "test": "npm run test-contracts"
   },
   "repository": {
     "type": "git",
@@ -22,8 +23,10 @@
   },
   "homepage": "https://github.com/decentraland/invite#readme",
   "dependencies": {
+    "buidler": "^0.1.4",
     "decentraland-ui": "^1.5.4",
     "eth-connect": "^0.3.0",
+    "ganache-cli": "^6.1.6",
     "openzeppelin-solidity": "^1.10.0"
   }
 }
