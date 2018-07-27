@@ -4,16 +4,94 @@ jobs:
   build:
     docker:
       - image: circleci/node:8.11.3
-    working_directory: ~/repo
+    working_directory: /tmp/app
     steps:
       - checkout
+      - run:
+          name: Install system dependencies
+          command: sudo apt-get update && sudo apt install -y libusb-1.0-0 libusb-1.0-0-dev
+      # Contracts
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "package-lock.json" }}
-          - v1-dependencies-
+          - contracts-dependencies-{{ checksum "package-lock.json" }}
       - run: npm install
       - save_cache:
           paths:
             - node_modules
-          key: v1-dependencies-{{ checksum "package-lock.json" }}
+          key: contracts-dependencies-{{ checksum "package-lock.json" }}
       - run: npm test
+      # Frontend
+      - restore_cache:
+          keys:
+          - frontend-dependencies-{{ checksum "webapp/package-lock.json" }}
+      - run:
+          name: (frontend) Install packages
+          command: cd webapp && npm install
+      - save_cache:
+          paths:
+            - node_modules
+          key: frontend-dependencies-{{ checksum "webapp/package-lock.json" }}
+      - run:
+          name: (frontend) Build
+          command: cd webapp && npm run build
+          environment:
+            NODE_PATH: src/
+            REACT_APP_VERSION: 0.1
+      - save_cache:
+          paths:
+            - webapp/build
+          key: build-{{ .Branch }}-{{ .Revision }}
+
+  deploy:
+    docker:
+      - image: circleci/node:8.11.3
+    working_directory: /tmp/app
+    steps:
+      - restore_cache:
+          keys:
+          - build-{{ .Branch }}-{{ .Revision }}
+      - run: 
+          name: Install system dependencies
+          command: sudo apt-get -y -qq install python-setuptools python-dev build-essential && sudo easy_install pip && pip install awscli --upgrade --user
+      - run:
+          name: Remove old assets => S3
+          command: ~/.local/bin/aws s3 rm ${APP_S3_BUCKET}static/ --recursive
+      - run:
+          name: Upload new assets => S3
+          command: ~/.local/bin/aws s3 cp webapp/build ${APP_S3_BUCKET} --acl public-read --recursive
+      - run:
+          name: Invalidate Cloudfront cache
+          command: ~/.local/bin/aws configure set preview.cloudfront true && ~/.local/bin/aws cloudfront create-invalidation --distribution-id ${APP_CF_DISTRIBUTION} --paths "/" "/*"
+
+workflows:
+  version: 2
+  build-deploy-release:
+    jobs:
+      - build:
+          context: gate-prd
+          filters:
+            branches:
+              only: release
+      - deploy:
+          context: gate-prd
+          requires:
+            - build
+  build-deploy-master:
+    jobs:
+      - build:
+          context: gate-dev
+          filters:
+            branches:
+              only: master
+      - deploy:
+          context: gate-dev
+          requires:
+            - build
+  build-branch:
+    jobs:
+      - build:
+          filters:
+            branches:
+              ignore:
+                - master
+                - release
