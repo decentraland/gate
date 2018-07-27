@@ -4,18 +4,16 @@ import {
   ConnectWalletSuccess
 } from '@dapps/modules/wallet/types'
 import {
+  FETCH_INVITES_REQUEST,
+  SEND_INVITE_REQUEST,
+  FetchInvitesRequest,
+  SendInvitesRequest,
   fetchInvitesRequest,
   fetchInvitesSuccess,
   fetchInvitesFailure,
   sendInvitesSuccess,
   sendInvitesFailure
 } from './actions'
-import {
-  FETCH_INVITES_REQUEST,
-  FetchInvitesRequest,
-  SEND_INVITE_REQUEST,
-  SendInvitesRequest
-} from './types'
 import { invite } from 'contracts'
 
 export function* inviteSaga() {

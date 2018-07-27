@@ -1,15 +1,11 @@
 import { action } from 'typesafe-actions'
 import { buildTransactionPayload } from '@dapps/modules/transaction/utils'
-import {
-  FETCH_INVITES_REQUEST,
-  FETCH_INVITES_SUCCESS,
-  FETCH_INVITES_FAILURE,
-  SEND_INVITE_REQUEST,
-  SEND_INVITE_SUCCESS,
-  SEND_INVITE_FAILURE
-} from './types'
 
 // Fetch Invites
+
+export const FETCH_INVITES_REQUEST = '[Request] Fetch Invites'
+export const FETCH_INVITES_SUCCESS = '[Success] Fetch Invites'
+export const FETCH_INVITES_FAILURE = '[Failure] Fetch Invites'
 
 export const fetchInvitesRequest = (address: string) =>
   action(FETCH_INVITES_REQUEST, {
@@ -28,7 +24,15 @@ export const fetchInvitesFailure = (address: string, errorMessage: string) =>
     errorMessage
   })
 
+export type FetchInvitesRequest = ReturnType<typeof fetchInvitesRequest>
+export type FetchInvitesSuccess = ReturnType<typeof fetchInvitesSuccess>
+export type FetchInvitesFailure = ReturnType<typeof fetchInvitesFailure>
+
 // Send Invite
+
+export const SEND_INVITE_REQUEST = '[Request] Send Invite'
+export const SEND_INVITE_SUCCESS = '[Success] Send Invite'
+export const SEND_INVITE_FAILURE = '[Failure] Send Invite'
 
 export const sendInvitesRequest = (address: string) =>
   action(SEND_INVITE_REQUEST, {
@@ -48,3 +52,7 @@ export const sendInvitesFailure = (address: string, errorMessage: string) =>
     address,
     errorMessage
   })
+
+export type SendInvitesRequest = ReturnType<typeof sendInvitesRequest>
+export type SendInvitesSuccess = ReturnType<typeof sendInvitesSuccess>
+export type SendInvitesFailure = ReturnType<typeof sendInvitesFailure>

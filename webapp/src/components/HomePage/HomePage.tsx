@@ -46,11 +46,12 @@ export default class HomePage extends React.PureComponent<
   }
 
   getError() {
-    let message, error
+    let message
+    let error
     if (this.isEmpty()) {
       message = 'Enter an Ethereum address'
     } else if (!this.isValid()) {
-      message = "That's not a valid Ethereum address"
+      message = 'That is not a valid Ethereum address'
       error = true
     }
 

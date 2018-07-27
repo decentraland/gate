@@ -1,3 +1,4 @@
+import { AnyAction } from 'redux'
 import { loadingReducer } from '@dapps/modules/loading/reducer'
 import {
   FETCH_INVITES_REQUEST,
@@ -5,18 +6,25 @@ import {
   FETCH_INVITES_FAILURE,
   FetchInvitesRequest,
   FetchInvitesSuccess,
-  FetchInvitesFailure,
-  InviteState
-} from './types'
+  FetchInvitesFailure
+} from './actions'
 
-const INITIAL_STATE: InviteState = {
+export type InviteState = {
+  loading: AnyAction[]
+  data: {
+    [address: string]: number
+  }
+  error: null | string
+}
+
+export const InviteInitialState: InviteState = {
   loading: [],
   data: {},
   error: null
 }
 
 export function invitesReducer(
-  state: InviteState = INITIAL_STATE,
+  state: InviteState = InviteInitialState,
   action: FetchInvitesRequest | FetchInvitesSuccess | FetchInvitesFailure
 ): InviteState {
   switch (action.type) {
