@@ -1,7 +1,6 @@
 import { all } from 'redux-saga/effects'
 import { env } from 'decentraland-commons'
 import { eth } from 'decentraland-eth'
-import { analyticsSaga } from '@dapps/modules/analytics/sagas'
 import { locationSaga } from '@dapps/modules/location/sagas'
 import { createWalletSaga } from '@dapps/modules/wallet/sagas'
 import { createTranslationSaga } from '@dapps/modules/translation/sagas'
@@ -22,7 +21,6 @@ export const translationSaga = createTranslationSaga({
 
 export function* rootSaga() {
   yield all([
-    analyticsSaga(),
     locationSaga(),
     walletSaga(),
     translationSaga(),

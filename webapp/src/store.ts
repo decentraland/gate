@@ -5,7 +5,6 @@ import { createLogger } from 'redux-logger'
 import createHistory from 'history/createBrowserHistory'
 import createSagasMiddleware from 'redux-saga'
 
-import { createAnalyticsMiddleware } from '@dapps/modules/analytics/middleware'
 import { createStorageMiddleware } from '@dapps/modules/storage/middleware'
 import { createTransactionMiddleware } from '@dapps/modules/transaction/middleware'
 
@@ -24,9 +23,6 @@ const loggerMiddleware = createLogger({
   predicate: (_: any, action) =>
     env.isDevelopment() || action.type.includes('Failure')
 })
-const analyticsMiddleware = createAnalyticsMiddleware(
-  env.get('REACT_APP_SEGMENT_API_KEY')
-)
 const { storageMiddleware, loadStorageMiddleware } = createStorageMiddleware(
   env.get('REACT_APP_LOCAL_STORAGE_KEY', 'decentraland-gate')
 )
@@ -37,8 +33,7 @@ const middleware = applyMiddleware(
   historyMiddleware,
   sagasMiddleware,
   loggerMiddleware,
-  transactionMiddleware,
-  analyticsMiddleware
+  transactionMiddleware
 )
 const enhancer = composeEnhancers(middleware)
 const store = createStore(rootReducer, enhancer)
