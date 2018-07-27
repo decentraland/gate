@@ -1,7 +1,7 @@
 import { MiddlewareAPI, AnyAction, Store } from 'redux'
 import { RouterState } from 'react-router-redux'
 import { WalletState } from '@dapps/modules/wallet/types'
-import { InviteState } from './modules/invite/reducer'
+import { InviteState } from './modules/invite/types'
 
 export type RootState = {
   router: RouterState

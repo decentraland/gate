@@ -6,14 +6,13 @@ import {
 import {
   FETCH_INVITES_REQUEST,
   SEND_INVITE_REQUEST,
-  FetchInvitesRequest,
-  SendInvitesRequest,
   fetchInvitesRequest,
   fetchInvitesSuccess,
   fetchInvitesFailure,
   sendInvitesSuccess,
   sendInvitesFailure
 } from './actions'
+import { FetchInvitesRequest, SendInvitesRequest } from './types'
 import { invite } from 'contracts'
 
 export function* inviteSaga() {

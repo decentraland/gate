@@ -24,10 +24,6 @@ export const fetchInvitesFailure = (address: string, errorMessage: string) =>
     errorMessage
   })
 
-export type FetchInvitesRequest = ReturnType<typeof fetchInvitesRequest>
-export type FetchInvitesSuccess = ReturnType<typeof fetchInvitesSuccess>
-export type FetchInvitesFailure = ReturnType<typeof fetchInvitesFailure>
-
 // Send Invite
 
 export const SEND_INVITE_REQUEST = '[Request] Send Invite'
@@ -52,7 +48,3 @@ export const sendInvitesFailure = (address: string, errorMessage: string) =>
     address,
     errorMessage
   })
-
-export type SendInvitesRequest = ReturnType<typeof sendInvitesRequest>
-export type SendInvitesSuccess = ReturnType<typeof sendInvitesSuccess>
-export type SendInvitesFailure = ReturnType<typeof sendInvitesFailure>
