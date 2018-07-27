@@ -7,11 +7,13 @@ jobs:
     working_directory: /tmp/app
     steps:
       - checkout
+      - run:
+          name: Install system dependencies
+          command: sudo apt-get update && sudo apt install -y libusb-1.0-0 libusb-1.0-0-dev
       # Contracts
       - restore_cache:
           keys:
           - contracts-dependencies-{{ checksum "package-lock.json" }}
-          - contracts-dependencies-
       - run: npm install
       - save_cache:
           paths:
