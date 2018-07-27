@@ -14,7 +14,9 @@ jobs:
       - restore_cache:
           keys:
           - contracts-dependencies-{{ checksum "package-lock.json" }}
-      - run: npm install
+      - run:
+          name: (contracts) Install packages
+          command: npm install
       - save_cache:
           paths:
             - node_modules
@@ -33,7 +35,7 @@ jobs:
           key: frontend-dependencies-{{ checksum "webapp/package-lock.json" }}
       - run:
           name: (frontend) Build
-          command: cd webapp && npm run build
+          command: cd webapp && npm run build:ci
           environment:
             NODE_PATH: src/
             REACT_APP_VERSION: 0.1
