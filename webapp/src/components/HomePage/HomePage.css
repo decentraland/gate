@@ -1,12 +1,6 @@
 .HomePage {
 }
 
-.HomePage .ui.segment {
-  background: var(--secondary);
-  margin: 36px 0px;
-  padding: 24px;
-}
-
 .HomePage .header {
   display: flex;
   justify-content: space-between;
@@ -20,6 +14,19 @@
 
 .HomePage .header .ui.button {
   cursor: default;
+  margin: 0px;
+}
+
+.HomePage .button-wrapper {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 24px;
+}
+
+.HomePage .button-wrapper > .message {
+  margin-left: 24px;
+  color: var(--secondary-text);
 }
 
 .HomePage .dcl.field .ui.input input {
@@ -32,5 +39,12 @@
 
 .HomePage .ui.button.primary {
   min-width: 198px;
-  margin-top: 24px;
+}
+
+.HomePage .ui.table .status {
+  text-transform: capitalize;
+}
+
+.HomePage .ui.table .address .dcl.address {
+  margin-left: 8px;
 }

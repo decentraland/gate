@@ -1,6 +1,4 @@
-// import { add } from '@dapps/modules/analytics/utils'
-// import { SOME_ACTION } from 'modules/something/types'
+import { add } from '@dapps/modules/analytics/utils'
+import { SEND_INVITE_SUCCESS } from 'modules/invite/types'
 
-// add(SOME_ACTION, 'Some Action', (action) => ({
-//   data: action.data
-// }))
+add(SEND_INVITE_SUCCESS, 'Send Invite')

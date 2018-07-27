@@ -28,17 +28,17 @@ const analyticsMiddleware = createAnalyticsMiddleware(
   env.get('REACT_APP_SEGMENT_API_KEY')
 )
 const { storageMiddleware, loadStorageMiddleware } = createStorageMiddleware(
-  env.get('REACT_APP_LOCAL_STORAGE_KEY', 'decentraland-agora')
+  env.get('REACT_APP_LOCAL_STORAGE_KEY', 'decentraland-gate')
 )
 const transactionMiddleware = createTransactionMiddleware()
 
 const middleware = applyMiddleware(
+  storageMiddleware,
   historyMiddleware,
   sagasMiddleware,
   loggerMiddleware,
-  analyticsMiddleware,
-  storageMiddleware,
-  transactionMiddleware
+  transactionMiddleware,
+  analyticsMiddleware
 )
 const enhancer = composeEnhancers(middleware)
 const store = createStore(rootReducer, enhancer)
