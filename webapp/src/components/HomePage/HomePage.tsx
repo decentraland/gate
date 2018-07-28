@@ -71,8 +71,7 @@ export default class HomePage extends React.PureComponent<
       <div className="HomePage">
         <Header size="huge">Gate</Header>
         <Header sub>
-          Management service for onboarding new users to the Decentraland World
-          Client
+          Management service to onboard new users to the Decentraland Alpha
         </Header>
         <Segment>
           <div className="header">
