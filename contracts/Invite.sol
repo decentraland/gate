@@ -38,7 +38,7 @@ contract DecentralandInvite is ERC721Token, Ownable, Pausable {
     super.transferFrom(_from, _to, _tokenId);
   }
 
-  function safeTransfer(address _from, address _to, uint256 _tokenId) whenNotPaused public {
+  function safeTransferFrom(address _from, address _to, uint256 _tokenId) whenNotPaused public {
     super.safeTransferFrom(_from, _to, _tokenId);
   }
 
