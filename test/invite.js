@@ -28,7 +28,7 @@ contract('Invite', function([_, owner, inviter, user, otherUser]) {
   })
 
   describe('Paused', function() {
-    it('Should throw if paused and transfer tried', async function() {
+    it('Should throw if transfer tried', async function() {
       const tokenId = await allowAndInvite(inviter, user)
 
       // Pause the contract
@@ -47,8 +47,10 @@ contract('Invite', function([_, owner, inviter, user, otherUser]) {
         })
         .should.be.rejectedWith(EVMRevert)
     })
+  })
 
-    it('Should transferFrom if unpaused and transfer tried', async function() {
+  describe('Unpaused', function() {
+    it('Should transfer to correct new owners', async function() {
       const tokenId = await allowAndInvite(inviter, user)
 
       // transferFrom
