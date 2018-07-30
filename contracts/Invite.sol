@@ -2,8 +2,9 @@ pragma solidity ^0.4.24;
 
 import "openzeppelin-solidity/contracts/token/ERC721/ERC721Token.sol";
 import "openzeppelin-solidity/contracts/ownership/Ownable.sol";
+import "openzeppelin-solidity/contracts/lifecycle/Pausable.sol";
 
-contract DecentralandInvite is ERC721Token, Ownable {
+contract DecentralandInvite is ERC721Token, Ownable, Pausable {
   mapping (address => uint256) public balance;
   mapping (uint256 => bytes) public metadata;
 
@@ -31,5 +32,22 @@ contract DecentralandInvite is ERC721Token, Ownable {
     require(msg.sender == ownerOf(id));
     _setTokenURI(id, uri);
     emit URIUpdated(id, uri);
+  }
+
+  function transferFrom(address _from, address _to, uint256 _tokenId) whenNotPaused public {
+    super.transferFrom(_from, _to, _tokenId);
+  }
+
+  function safeTransfer(address _from, address _to, uint256 _tokenId) whenNotPaused public {
+    super.safeTransferFrom(_from, _to, _tokenId);
+  }
+
+  function safeTransferFrom(
+    address _from,
+    address _to,
+    uint256 _tokenId,
+    bytes _data
+  ) whenNotPaused public {
+    super.safeTransferFrom(_from, _to, _tokenId, _data);
   }
 }
