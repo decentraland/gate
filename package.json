@@ -31,5 +31,8 @@
     "ganache-cli": "^6.1.6",
     "openzeppelin-solidity": "^1.10.0",
     "truffle-hdwallet-provider": "0.0.5"
+  },
+  "devDependencies": {
+    "prettier": "^1.14.0"
   }
 }
