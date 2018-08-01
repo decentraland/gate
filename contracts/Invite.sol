@@ -28,6 +28,23 @@ contract DecentralandInvite is ERC721Token, Ownable, Pausable {
     emit Invited(msg.sender, target, id, note);
   }
 
+  function revoke(address target) onlyOwner public {
+    require(ownedTokensCount[target] > 0);
+
+    uint256 addressTokensCount = ownedTokensCount[target];
+
+    // Collect token IDs to burn
+    uint256[] memory burnTokenIds = new uint256[](addressTokensCount);
+    for (uint256 i = 0; i < addressTokensCount; i++) {
+      burnTokenIds[i] = tokenOfOwnerByIndex(target, i);
+    }
+
+    // Burn all tokens held by the target address
+    for (i = 0; i < addressTokensCount; i++) {
+      _burn(target, burnTokenIds[i]);
+    }
+  }
+
   function setTokenURI(uint256 id, string uri) public {
     require(msg.sender == ownerOf(id));
     _setTokenURI(id, uri);
