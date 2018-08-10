@@ -15,13 +15,13 @@ import './index.css'
 
 ReactDOM.render(
   <Provider store={store}>
-    <ConnectedRouter history={history}>
-      <WalletProvier>
-        <TranslationProvider locales={['en']}>
+    <WalletProvier>
+      <TranslationProvider locales={['en']}>
+        <ConnectedRouter history={history}>
           <Routes />
-        </TranslationProvider>
-      </WalletProvier>
-    </ConnectedRouter>
+        </ConnectedRouter>
+      </TranslationProvider>
+    </WalletProvier>
   </Provider>,
   document.getElementById('root')
 )

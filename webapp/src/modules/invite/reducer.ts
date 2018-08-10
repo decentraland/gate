@@ -1,5 +1,4 @@
-import { AnyAction } from 'redux'
-import { loadingReducer } from '@dapps/modules/loading/reducer'
+import { loadingReducer, LoadingState } from '@dapps/modules/loading/reducer'
 import {
   FETCH_INVITES_REQUEST,
   FETCH_INVITES_SUCCESS,
@@ -10,7 +9,7 @@ import {
 } from './actions'
 
 export type InviteState = {
-  loading: AnyAction[]
+  loading: LoadingState
   data: {
     [address: string]: number
   }
