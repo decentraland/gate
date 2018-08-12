@@ -1,5 +1,5 @@
-const defaultGasPrice = 4e9
-const defaultGasLimit = 4e6
+const defaultGasPrice = 5e9
+const defaultGasLimit = 4e5
 
 const contractName = 'DecentralandInvite'
 
@@ -9,20 +9,21 @@ function getContractAt(name) {
   return contract.at(address)
 }
 
-task('allow', 'Give invites to an address')
-  .addPositionalParam('address', 'Address to receive the invites')
-  .addPositionalParam('count', 'Number of invites to give')
-  .addOptionalParam('gasprice', 'Gas price for the transaction')
-  .setAction(async ({ address, count, gasprice }) => {
-    const contract = getContractAt(contractName)
-
-    const response = await contract.allow(address, count, {
-      gas: defaultGasLimit,
+function injectGasParams(fn) {
+  return function({ gaslimit, gasprice, ...params }) {
+    params.gasParams = {
+      gas: gaslimit || defaultGasLimit,
       gasPrice: gasprice || defaultGasPrice
-    })
-    console.log(response)
-    process.exit(0)
-  })
+    }
+    return fn(params)
+  }
+}
+
+function buildTaskWithGas(name, description) {
+  return task(name, description)
+    .addOptionalParam('gasprice', 'Gas price for the transaction')
+    .addOptionalParam('gaslimit', 'Gas limit for the transaction')
+}
 
 task('check', 'Check if address is invited')
   .addPositionalParam('address', 'Address of an invited user')
@@ -34,12 +35,39 @@ task('check', 'Check if address is invited')
     process.exit(0)
   })
 
-task('invite', 'Invite address')
-  .addPositionalParam('address', 'Address of an user to invite')
-  .setAction(async ({ address }) => {
-    const contract = getContractAt(contractName)
+buildTaskWithGas('allow', 'Give invites to an address')
+  .addPositionalParam('address', 'Address to receive the invites')
+  .addPositionalParam('count', 'Number of invites to give')
+  .setAction(
+    injectGasParams(async ({ address, count, gasParams }) => {
+      const contract = getContractAt(contractName)
+      const response = await contract.allow(address, count, gasParams)
+      console.log(response)
+      process.exit(0)
+    })
+  )
 
-    await contract.invite(address, '')
-    console.log(`Address ${address} has been invited`)
-    process.exit(0)
-  })
+buildTaskWithGas('invite', 'Invite address')
+  .addPositionalParam('address', 'Address of an user to invite')
+  .setAction(
+    injectGasParams(async ({ address, gasParams }) => {
+      const contract = getContractAt(contractName)
+      await contract.invite(address, '', gasParams)
+      console.log(`Address ${address} has been invited`)
+      process.exit(0)
+    })
+  )
+
+buildTaskWithGas(
+  'transfer-ownership',
+  'Transfer ownership of the contract to new owner'
+)
+  .addPositionalParam('address', 'Address of the new owner')
+  .setAction(
+    injectGasParams(async ({ address, gasParams }) => {
+      const contract = getContractAt(contractName)
+      await contract.transferOwnership(address, gasParams)
+      console.log(`Address ${address} set as new owner`)
+      process.exit(0)
+    })
+  )
