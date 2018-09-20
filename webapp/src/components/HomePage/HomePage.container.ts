@@ -16,10 +16,10 @@ const mapState = (state: RootState): Partial<HomePageProps> => {
   const invites = getInvites(state, address)
 
   const pendingTransactions = address
-    ? getPendingTransactions(state, address).reverse()
+    ? getPendingTransactions(state, address)
     : []
   const transactionHistory = address
-    ? getTransactionHistory(state, address).reverse()
+    ? getTransactionHistory(state, address)
     : []
 
   const totalSent = pendingTransactions.length + transactionHistory.length

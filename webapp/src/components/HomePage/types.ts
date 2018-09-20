@@ -1,12 +1,12 @@
 import { Transaction } from '@dapps/modules/transaction/types'
 
-export interface HomePageProps {
+export type HomePageProps = {
   invites: number
   pendingTransactions: Transaction[]
   transactionHistory: Transaction[]
   totalSent: number
   onInvite: (address: string) => void
 }
-export interface HomePageState {
+export type HomePageState = {
   address: string
 }
