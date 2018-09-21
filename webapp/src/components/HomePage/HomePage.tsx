@@ -137,26 +137,23 @@ export default class HomePage extends React.PureComponent<
                 </Table.Row>
               </Table.Header>
               <Table.Body>
-                {transations.map(
-                  (transaction: Transaction) =>
-                    console.log(transaction, (transaction as any).payload) || (
-                      <Table.Row key={transaction.hash}>
-                        <Table.Cell className="address">
-                          <Blockie
-                            seed={(transaction as any).payload.address}
-                            scale={3}
-                          />
-                          <Address
-                            shorten={false}
-                            value={(transaction as any).payload.address}
-                          />
-                        </Table.Cell>
-                        <Table.Cell className="status">
-                          {this.renderLink(transaction)}
-                        </Table.Cell>
-                      </Table.Row>
-                    )
-                )}
+                {transations.map((transaction: Transaction) => (
+                  <Table.Row key={transaction.hash}>
+                    <Table.Cell className="address">
+                      <Blockie
+                        seed={(transaction as any).payload.address}
+                        scale={3}
+                      />
+                      <Address
+                        shorten={false}
+                        value={(transaction as any).payload.address}
+                      />
+                    </Table.Cell>
+                    <Table.Cell className="status">
+                      {this.renderLink(transaction)}
+                    </Table.Cell>
+                  </Table.Row>
+                ))}
               </Table.Body>
             </Table>
           </>
