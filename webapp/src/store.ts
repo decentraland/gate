@@ -23,9 +23,9 @@ const loggerMiddleware = createLogger({
   predicate: (_: any, action) =>
     env.isDevelopment() || action.type.includes('Failure')
 })
-const { storageMiddleware, loadStorageMiddleware } = createStorageMiddleware(
-  env.get('REACT_APP_LOCAL_STORAGE_KEY', 'decentraland-gate')
-)
+const { storageMiddleware, loadStorageMiddleware } = createStorageMiddleware({
+  storageKey: env.get('REACT_APP_LOCAL_STORAGE_KEY', 'decentraland-gate')
+})
 const transactionMiddleware = createTransactionMiddleware()
 
 const middleware = applyMiddleware(
