@@ -88,7 +88,9 @@ export default class HomePage extends React.PureComponent<
       transactionHistory,
       totalSent
     } = this.props
-    const transations = [...pendingTransactions, ...transactionHistory]
+    const transations = [...pendingTransactions, ...transactionHistory].sort(
+      (a: Transaction, b: Transaction) => (a.timestamp > b.timestamp ? -1 : 1)
+    )
     const { message, error } = this.getError()
     return (
       <div className="HomePage">
