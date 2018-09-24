@@ -8,7 +8,7 @@ import {
   Blockie,
   Address
 } from 'decentraland-ui'
-import { eth } from 'decentraland-eth'
+import { eth, txUtils } from 'decentraland-eth'
 import EtherscanLink from '@dapps/containers/EtherscanLink'
 import { Transaction } from '@dapps/modules/transaction/types'
 
@@ -58,6 +58,29 @@ export default class HomePage extends React.PureComponent<
     return { message, error }
   }
 
+  renderLink(transaction: Transaction) {
+    switch (transaction.status) {
+      case null:
+        return <span className="unknown">Loading&hellip;</span>
+      case txUtils.TRANSACTION_TYPES.dropped:
+        return <span className="unknown">Dropped</span>
+      case txUtils.TRANSACTION_TYPES.replaced:
+        return transaction.replacedBy ? (
+          <EtherscanLink txHash={transaction.replacedBy}>
+            {transaction.status}{' '}
+          </EtherscanLink>
+        ) : (
+          <span className="unknown">Replaced</span>
+        )
+      default:
+        return (
+          <EtherscanLink txHash={transaction.hash}>
+            {transaction.status}{' '}
+          </EtherscanLink>
+        )
+    }
+  }
+
   render() {
     const {
       invites,
@@ -65,7 +88,9 @@ export default class HomePage extends React.PureComponent<
       transactionHistory,
       totalSent
     } = this.props
-    const transations = [...pendingTransactions, ...transactionHistory]
+    const transations = [...pendingTransactions, ...transactionHistory].sort(
+      (a: Transaction, b: Transaction) => (a.timestamp > b.timestamp ? -1 : 1)
+    )
     const { message, error } = this.getError()
     return (
       <div className="HomePage">
@@ -108,12 +133,14 @@ export default class HomePage extends React.PureComponent<
             <Header>Invites History ({totalSent})</Header>
             <Table basic>
               <Table.Header>
-                <Table.HeaderCell>Address</Table.HeaderCell>
-                <Table.HeaderCell>Status</Table.HeaderCell>
+                <Table.Row>
+                  <Table.HeaderCell>Address</Table.HeaderCell>
+                  <Table.HeaderCell>Status</Table.HeaderCell>
+                </Table.Row>
               </Table.Header>
               <Table.Body>
                 {transations.map((transaction: Transaction) => (
-                  <Table.Row>
+                  <Table.Row key={transaction.hash}>
                     <Table.Cell className="address">
                       <Blockie
                         seed={(transaction as any).payload.address}
@@ -125,9 +152,7 @@ export default class HomePage extends React.PureComponent<
                       />
                     </Table.Cell>
                     <Table.Cell className="status">
-                      <EtherscanLink txHash={transaction.hash}>
-                        {transaction.status}{' '}
-                      </EtherscanLink>
+                      {this.renderLink(transaction)}
                     </Table.Cell>
                   </Table.Row>
                 ))}

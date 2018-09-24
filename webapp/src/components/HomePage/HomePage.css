@@ -41,10 +41,18 @@
   min-width: 198px;
 }
 
+.HomePage .ui.table {
+  margin-bottom: 32px;
+}
+
 .HomePage .ui.table .status {
   text-transform: capitalize;
 }
 
 .HomePage .ui.table .address .dcl.address {
   margin-left: 8px;
+}
+
+.HomePage .unknown {
+  color: var(--secondary-text);
 }
