@@ -3,17 +3,14 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/node:8.11.3
+      - image: circleci/node:10
     working_directory: /tmp/app
     steps:
       - checkout
-      - run:
-          name: Install system dependencies
-          command: sudo apt-get update && sudo apt install -y libusb-1.0-0 libusb-1.0-0-dev
       # Contracts
       - restore_cache:
           keys:
-          - contracts-dependencies-{{ checksum "package-lock.json" }}
+            - contracts-dependencies-{{ checksum "package-lock.json" }}
       - run:
           name: (contracts) Install packages
           command: npm install
@@ -25,7 +22,7 @@ jobs:
       # Frontend
       - restore_cache:
           keys:
-          - frontend-dependencies-{{ checksum "webapp/package-lock.json" }}
+            - frontend-dependencies-{{ checksum "webapp/package-lock.json" }}
       - run:
           name: (frontend) Install packages
           command: cd webapp && npm install
@@ -46,24 +43,27 @@ jobs:
 
   deploy:
     docker:
-      - image: circleci/node:8.11.3
+      - image: circleci/node:10
     working_directory: /tmp/app
     steps:
       - restore_cache:
           keys:
-          - build-{{ .Branch }}-{{ .Revision }}
-      - run: 
+            - build-{{ .Branch }}-{{ .Revision }}
+      - run:
           name: Install system dependencies
-          command: sudo apt-get -y -qq install python-setuptools python-dev build-essential && sudo easy_install pip && pip install awscli --upgrade --user
+          command:
+            sudo apt-get -y -qq install python-setuptools python-dev build-essential && sudo easy_install pip && pip install awscli --upgrade --user
       - run:
           name: Remove old assets => S3
           command: ~/.local/bin/aws s3 rm ${APP_S3_BUCKET}static/ --recursive
       - run:
           name: Upload new assets => S3
-          command: ~/.local/bin/aws s3 cp webapp/build ${APP_S3_BUCKET} --acl public-read --recursive
+          command:
+            ~/.local/bin/aws s3 cp webapp/build ${APP_S3_BUCKET} --acl public-read --recursive
       - run:
           name: Invalidate Cloudfront cache
-          command: ~/.local/bin/aws configure set preview.cloudfront true && ~/.local/bin/aws cloudfront create-invalidation --distribution-id ${APP_CF_DISTRIBUTION} --paths "/" "/*"
+          command:
+            ~/.local/bin/aws configure set preview.cloudfront true && ~/.local/bin/aws cloudfront create-invalidation --distribution-id ${APP_CF_DISTRIBUTION} --paths "/" "/*"
 
 workflows:
   version: 2

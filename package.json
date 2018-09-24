@@ -26,7 +26,6 @@
     "buidler": "^0.1.4",
     "chai-as-promised": "^7.1.1",
     "chai-bignumber": "^2.0.2",
-    "decentraland-ui": "^1.5.4",
     "eth-connect": "^0.3.0",
     "ganache-cli": "^6.1.6",
     "openzeppelin-solidity": "^1.10.0",

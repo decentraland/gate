@@ -21,7 +21,7 @@
     "dcl-tslint-config-standard": "^1.0.1",
     "decentraland-commons": "^5.1.0",
     "decentraland-dapps": "^3.2.0",
-    "decentraland-eth": "^5.0.0",
+    "decentraland-eth": "^5.0.1-rc1",
     "decentraland-ui": "^1.10.0",
     "dotenv": "4.0.0",
     "dotenv-expand": "4.2.0",
