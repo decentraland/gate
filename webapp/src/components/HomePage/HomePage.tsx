@@ -12,7 +12,7 @@ import { eth, txUtils } from 'decentraland-eth'
 import EtherscanLink from '@dapps/containers/EtherscanLink'
 import { Transaction } from '@dapps/modules/transaction/types'
 
-import { HomePageProps, HomePageState } from './types'
+import { HomePageProps, HomePageState } from './Homepage.types'
 import './HomePage.css'
 
 export default class HomePage extends React.PureComponent<
@@ -82,22 +82,14 @@ export default class HomePage extends React.PureComponent<
   }
 
   render() {
-    const {
-      invites,
-      pendingTransactions,
-      transactionHistory,
-      totalSent
-    } = this.props
-    const transations = [...pendingTransactions, ...transactionHistory].sort(
-      (a: Transaction, b: Transaction) => (a.timestamp > b.timestamp ? -1 : 1)
-    )
+    const { invites, transactions, totalSent } = this.props
     const { message, error } = this.getError()
     return (
       <div className="HomePage">
         <Header size="huge">Gate</Header>
-        <Header sub>
+        <p className="subtitle">
           Management service to onboard new users to the Decentraland Alpha
-        </Header>
+        </p>
         <Segment>
           <div className="header">
             <Header>Invite new user</Header>
@@ -139,7 +131,7 @@ export default class HomePage extends React.PureComponent<
                 </Table.Row>
               </Table.Header>
               <Table.Body>
-                {transations.map((transaction: Transaction) => (
+                {transactions.map((transaction: Transaction) => (
                   <Table.Row key={transaction.hash}>
                     <Table.Cell className="address">
                       <Blockie
