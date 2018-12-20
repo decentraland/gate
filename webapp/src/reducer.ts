@@ -9,6 +9,7 @@ import {
   storageReducerWrapper
 } from '@dapps/modules/storage/reducer'
 import { transactionReducer as transaction } from '@dapps/modules/transaction/reducer'
+import { locationReducer as location } from '@dapps/modules/location/reducer'
 import { invitesReducer as invite } from 'modules/invite/reducer'
 
 // TODO: Consider spliting individual reducers into { data, loading, error }
@@ -19,6 +20,7 @@ export const rootReducer = storageReducerWrapper(
     translation,
     storage,
     transaction,
+    location,
     invite
   })
 )

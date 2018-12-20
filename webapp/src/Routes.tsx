@@ -1,9 +1,9 @@
 import * as React from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
 
-import { SignInPage } from '@dapps/containers'
+import App from '@dapps/containers/App'
+import SignInPage from '@dapps/containers/SignInPage'
 
-import Page from 'components/Page'
 import HomePage from 'components/HomePage'
 import { locations } from 'locations'
 
@@ -19,6 +19,6 @@ export default class Routes extends React.Component {
   }
 
   render() {
-    return <Page>{this.renderRoutes()} </Page>
+    return <App>{this.renderRoutes()} </App>
   }
 }
