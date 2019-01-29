@@ -1,5 +1,13 @@
 const HDWalletProvider = require('truffle-hdwallet-provider')
-const mnemonic = '' // 12 word mnemonic
+
+const createWalletProvider = (mnemonic, rpcEndpoint) =>
+  new HDWalletProvider(mnemonic, rpcEndpoint)
+
+const createInfuraProvider = (network = 'mainnet') =>
+  createWalletProvider(
+    process.env.MNEMONIC || '',
+    `https://${network}.infura.io/${process.env.INFURA_API_KEY}`
+  )
 
 require('./scripts/cmd')
 
@@ -14,22 +22,20 @@ module.exports = {
   },
   networks: {
     mainnet: {
-      provider: () =>
-        new HDWalletProvider(mnemonic, 'https://mainnet.infura.io/'),
-      gas: 70000000,
-      network_id: '1'
+      provider: () => createInfuraProvider('mainnet'),
+      network_id: 1,
+      gas: 70000000
     },
     ropsten: {
-      provider: () =>
-        new HDWalletProvider(mnemonic, 'https://ropsten.infura.io/'),
-      network_id: 3, // official id of the ropsten network
+      provider: () => createInfuraProvider('ropsten'),
+      network_id: 3,
       gas: 30000000
     },
     development: {
       host: 'localhost',
       port: 18545,
-      gas: 100000000,
-      network_id: '*' // Match any network id
+      network_id: '*',
+      gas: 100000000
     }
   }
 }
