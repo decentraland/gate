@@ -58,6 +58,14 @@ buildTaskWithGas('invite', 'Invite address')
     })
   )
 
+task('get-owner', 'Check owner address of the contract').setAction(async () => {
+  const contract = getContractAt(contractName)
+
+  const owner = await contract.owner()
+  console.log(`Address ${owner} is the contract owner`)
+  process.exit(0)
+})
+
 buildTaskWithGas(
   'transfer-ownership',
   'Transfer ownership of the contract to new owner'
