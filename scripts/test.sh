@@ -16,7 +16,7 @@ cleanup() {
 if [ "$SOLIDITY_COVERAGE" = true ]; then
   ganache_port=8555
 else
-  ganache_port=18545
+  ganache_port=8545
 fi
 
 ganache_running() {
@@ -48,6 +48,7 @@ if ganache_running; then
 else
   echo "Starting our own ganache instance"
   start_ganache
+  sleep 3
 fi
 
 node_modules/.bin/buidler test "$@"

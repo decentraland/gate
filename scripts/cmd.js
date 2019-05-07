@@ -4,6 +4,13 @@ const defaultGasLimit = 4e5
 const contractName = 'DecentralandInvite'
 
 function getContractAt(name) {
+  const contracts = config.contracts[buidlerArguments.network];
+
+  if (contracts === undefined) {
+    console.error("There are no deployed contracts in the network", buidlerArguments.network);
+    process.exit(1)
+  }
+
   const address = config.contracts[buidlerArguments.network][name]
   const contract = artifacts.require(name)
   return contract.at(address)
@@ -32,7 +39,6 @@ task('check', 'Check if address is invited')
 
     const balance = await contract.balanceOf(address)
     console.log(`Address ${address} has ${balance.toNumber()} invite tickets`)
-    process.exit(0)
   })
 
 buildTaskWithGas('allow', 'Give invites to an address')
@@ -43,7 +49,6 @@ buildTaskWithGas('allow', 'Give invites to an address')
       const contract = getContractAt(contractName)
       const response = await contract.allow(address, count, gasParams)
       console.log(response)
-      process.exit(0)
     })
   )
 
@@ -54,7 +59,6 @@ buildTaskWithGas('invite', 'Invite address')
       const contract = getContractAt(contractName)
       await contract.invite(address, '', gasParams)
       console.log(`Address ${address} has been invited`)
-      process.exit(0)
     })
   )
 
@@ -63,7 +67,6 @@ task('get-owner', 'Check owner address of the contract').setAction(async () => {
 
   const owner = await contract.owner()
   console.log(`Address ${owner} is the contract owner`)
-  process.exit(0)
 })
 
 buildTaskWithGas(
@@ -76,6 +79,5 @@ buildTaskWithGas(
       const contract = getContractAt(contractName)
       await contract.transferOwnership(address, gasParams)
       console.log(`Address ${address} set as new owner`)
-      process.exit(0)
     })
   )
